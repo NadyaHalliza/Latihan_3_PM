@@ -1,0 +1,66 @@
+class Song {
+    String title;
+    Song next; // Merujuk ke lagu berikutnya dalam playlist
+
+    // Constructor untuk inisialisasi judul lagu
+    public Song(String title) {
+        this.title = title;
+        this.next = null; // Lagu berikutnya awalnya null
+    }
+}
+
+// Class untuk Playlist
+class Playlist {
+    private Song head; // Kepala dari playlist
+
+    // Constructor untuk inisialisasi playlist kosong
+    public Playlist() {
+        this.head = null;
+    }
+
+    // Metode untuk menambahkan lagu di akhir playlist
+    public void addSong(String title) {
+        Song newSong = new Song(title);
+        if (head == null) {
+            head = newSong; // Jika playlist kosong, lagu pertama menjadi head
+        } else {
+            Song current = head;
+            // Loop hingga menemukan lagu terakhir
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newSong; // Tambahkan lagu di akhir playlist
+        }
+    }
+
+    // Metode untuk menampilkan seluruh lagu dalam playlist
+    public void displayPlaylist() {
+        if (head == null) {
+            System.out.println("Playlist kosong.");
+            return;
+        }
+        Song current = head;
+        System.out.println("Playlist:");
+        // Loop melalui seluruh lagu dalam playlist
+        while (current != null) {
+            System.out.println(current.title);
+            current = current.next;
+        }
+    }
+
+    // Main method untuk uji coba
+    public static void main(String[] args) {
+        Playlist myPlaylist = new Playlist();
+        myPlaylist.addSong("The Brave");
+        myPlaylist.addSong("Fireflies");
+        myPlaylist.addSong("Untungnya, Hidup Harus Tetap Berjalan");
+        myPlaylist.addSong("Die With A Smile");
+        myPlaylist.addSong("Be Affected");
+        myPlaylist.addSong("White Night");
+        myPlaylist.addSong("If I Can Stop One Heart From Breaking");
+        myPlaylist.addSong("Sway to My Beat in Cosmos");
+        myPlaylist.addSong("Hope is The Thing With Feathers");
+
+        myPlaylist.displayPlaylist();
+    }
+}
