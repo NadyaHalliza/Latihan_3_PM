@@ -1,0 +1,96 @@
+class Passenger {
+    String name;
+    Passenger next; // Merujuk ke penumpang berikutnya dalam daftar
+
+    // Constructor untuk inisialisasi nama penumpang
+    public Passenger(String name) {
+        this.name = name;
+        this.next = null; // Penumpang berikutnya awalnya null
+    }
+}
+
+// Kelas untuk Flight (penerbangan)
+class Flight {
+    private Passenger head; // Kepala dari daftar penumpang
+
+    // Constructor untuk inisialisasi daftar penumpang kosong
+    public Flight() {
+        this.head = null;
+    }
+
+    // Metode untuk menambahkan penumpang di akhir daftar
+    public void addPassenger(String name) {
+        Passenger newPassenger = new Passenger(name);
+        if (head == null) {
+            head = newPassenger; // Jika daftar penumpang kosong, penumpang pertama menjadi head
+        } else {
+            Passenger current = head;
+            // Loop hingga menemukan penumpang terakhir
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newPassenger; // Tambahkan penumpang di akhir daftar
+        }
+    }
+
+    // Metode untuk menghapus penumpang dari daftar berdasarkan nama
+    public void removePassenger(String name) {
+        if (head == null) {
+            System.out.println("Daftar penumpang kosong.");
+            return;
+        }
+
+        // Jika penumpang yang akan dihapus ada di posisi head
+        if (head.name.equals(name)) {
+            head = head.next; // Hapus head dengan menggantinya ke penumpang berikutnya
+            System.out.println(name + " telah dihapus dari daftar penumpang.");
+            return;
+        }
+
+        Passenger current = head;
+        Passenger previous = null;
+
+        // Loop melalui daftar untuk menemukan penumpang yang akan dihapus
+        while (current != null && !current.name.equals(name)) {
+            previous = current;
+            current = current.next;
+        }
+
+        // Jika penumpang ditemukan
+        if (current != null) {
+            previous.next = current.next; // Hapus penumpang dengan melompati node yang dihapus
+            System.out.println(name + " telah dihapus dari daftar penumpang.");
+        } else {
+            System.out.println(name + " tidak ditemukan dalam daftar penumpang.");
+        }
+    }
+
+    // Metode untuk menampilkan seluruh penumpang dalam penerbangan
+    public void displayPassengers() {
+        if (head == null) {
+            System.out.println("Tidak ada penumpang.");
+            return;
+        }
+        Passenger current = head;
+        System.out.println("Daftar Penumpang:");
+        // Loop melalui seluruh penumpang dalam daftar
+        while (current != null) {
+            System.out.println(current.name);
+            current = current.next;
+        }
+    }
+
+    // Main method untuk uji coba
+    public static void main(String[] args) {
+        Flight flight = new Flight();
+        flight.addPassenger("Xiao");
+        flight.addPassenger("Kazuha");
+        flight.addPassenger("Nazriel");
+
+        flight.displayPassengers();
+
+        flight.removePassenger("Xiao");
+
+        flight.displayPassengers();
+    }
+}
